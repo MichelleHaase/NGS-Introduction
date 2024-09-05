@@ -1,8 +1,10 @@
 nextflow.enable.dsl=2
 
+params.out = "$launchDir/output"
+
 process downloadFile 
 {
-	publishDir "/home/michelle/Modul_5_NGS_Git/NGS-Introduction", mode: "copy", overwrite: true
+	publishDir params.out, mode: "copy", overwrite: true
 	output:
 		path "batch1.fasta"
 	"""
@@ -11,7 +13,7 @@ process downloadFile
 }
 process countSequences
 {
-	publishDir "/home/michelle/Modul_5_NGS_Git/NGS-Introduction", mode: "copy", overwrite: true
+	publishDir params.out, mode: "copy", overwrite: true
 	input:
 		path infile
 	output:
@@ -20,8 +22,18 @@ process countSequences
 	grep ">" $infile | wc -l > numseqa.txt
 	"""
 }
-
+process splitSeq
+{
+	publishDir params.out, mode: "copy", overwrite: true
+	input:
+		path infile
+	output:
+		path "split_*"
+	"""
+		split $infile --lines=2 --additional-suffix=.fasta split_
+	"""
+}
 workflow
 {
-	downloadFile | countSequences
+	downloadFile | splitSeq
 }
