@@ -40,13 +40,20 @@ process downloadFile
 }
 ```
 publishDir -> path where to save, 
-mode "copy" -> default mode "link" just a softlink is created that points to the copy in the workingDir (where the pipeline gets the Data and keeps processing it), mode "move" only leaves a copy in the given path not the workingDir
+mode "copy" -> default mode "link" just a softlink is created that 
+points to the copy in the workingDir (where the pipeline gets the 
+Data and keeps processing it), mode "move" only leaves a copy in the 
+given path not the workingDir
+
 overwrite: true to overwrite the file if it already exists.
 the -O for wget TODO
 
 assigning channels to processes 
 
-Since both processes create their own tmp workDir, countSequences does not get an input since its in the WDir from downloadFile not its own, so those processes need to be connected with a Channel(fastachannel)
+Since both processes create their own tmp workDir, countSequences 
+does not get an input since its in the WDir from downloadFile not 
+its own, so those processes need to be connected with a Channel
+(fastachannel)
 
 * in the workflow
 ```
@@ -67,14 +74,17 @@ process countSequences
 		path "numseqa.txt"
 	"""
 	grep ">" $infile | wc -l > numseqa.txt 
-	(the $ is necessary so Bash sees it as a Variable not just Text inside the ''' ''' since this means its a Bash code Block )
+	(the $ is necessary so Bash sees it as a Variable not just Text 
+	inside the ''' ''' since this means its a Bash code Block )
 	"""
 }
 ```
-This all is necessary because if no input is stated no input will be accepted thru fastachannel
+This all is necessary because if no input is stated no input will be 
+accepted thru fastachannel
 
 # params.out
-having Local paths in the file makes it impossiible for others to use it
+having Local paths in the file makes it impossiible for others to 
+use it
 
 so this 
 ```
@@ -96,8 +106,12 @@ nextflow.enable.dsl=2
 
 params.out = "$launchDir/output" 
 ```
-(params is a dictonary containing several parameters, using params.out instead of just a Variable is advantagous because you can overwrite it with --out on the commandline if needed)
-(launchDir is the standard Dir where the script is launched from, $ because it should be substituted by the actual file and its in"")
+(params is a dictonary containing several parameters, using params.
+out instead of just a Variable is advantagous because you can 
+overwrite it with --out on the commandline if needed)
+
+(launchDir is the standard Dir where the script is launched from, $ 
+because it should be substituted by the actual file and its in"")
 ```
 process downloadFile 
 {
