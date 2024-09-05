@@ -4,13 +4,18 @@
 
 **Pipelining** using Pipeline ensures reproducible Results or at least Analysis 
 
-**Nextflow** Domain specific Language based on Groovy three parts Channels in and output of Datasets, Processes are the programs executing on the datasets,  Workflow describes the interactions between Channels an d Processes. 
+**Nextflow** Domain specific Language based on Groovy three parts Channels in 
+and output of Datasets, Processes are the programs executing on the datasets,  
+Workflow describes the interactions between Channels an d Processes. 
 documentation Link https://www.nextflow.io/docs/latest/index.html
 helpful patterns https://nextflow-io.github.io/patterns/index.html
 
 **scripts** have the ending .nf 
-processes are created like this they usually hold a unit of commands that are one logical logic. separate Processes can be run simultaneity on different CPU Cores only if they are separate Processes.
-Var writing to execute in Bash and Nextflow. Inside the Nextflow script but outside of Bash code blocks ''' ''' plainly written Varnames are executed, inside of "" $ is needed to differentiate between text and code. inside a Bash Codeblock ''' ''' $ is always needed to mark Vars.
+processes are created like this they usually hold a unit of commands that are one logical logic. 
+separate Processes can be run simultaneity on different CPU Cores only if they are separate Processes.
+Var writing to execute in Bash and Nextflow. Inside the Nextflow script but outside of Bash code blocks ''' ''' 
+plainly written Varnames are executed, inside of "" $ is needed to differentiate between text and code. 
+inside a Bash Codeblock ''' ''' $ is always needed to mark Vars.
 
 ```
 process ProcessName 
@@ -46,7 +51,7 @@ Data and keeps processing it), mode "move" only leaves a copy in the
 given path not the workingDir
 
 overwrite: true to overwrite the file if it already exists.
-the -O for wget TODO
+the -O for wget defines the output file
 
 assigning channels to processes 
 
@@ -107,7 +112,7 @@ nextflow.enable.dsl=2
 params.out = "$launchDir/output" 
 ```
 (params is a dictonary containing several parameters, using params.
-out instead of just a Variable is advantagous because you can 
+out instead of just a Variable is advantageous because you can 
 overwrite it with --out on the commandline if needed)
 
 (launchDir is the standard Dir where the script is launched from, $ 
@@ -124,4 +129,20 @@ process downloadFile
 	"""
 }
 ```
-implicit vars TODO
+implicit vars is not declared because the type is assumed by the operators
+
+# Python in Bash
+  """
+  python $projectDir/split.py $infile seq_
+  """
+  $projectDir because thats where the python script is its not in the workDir 
+  of the process
+
+# flatten
+is a operation used inside the workflow {} statement it splits the channel 
+input so that several files (the input has to be several files it doesn't 
+split) can be processes after each other, not as one Chunk
+
+# collect
+is the counterpart to flatten it collects all inputs in a channel and only 
+starts to execute after all inputs are created.
