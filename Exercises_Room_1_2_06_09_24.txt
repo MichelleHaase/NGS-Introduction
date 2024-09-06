@@ -1,0 +1,30 @@
+room one 
+	new dwnld file url changeable witch params. 
+	count Gs and Cs
+	create Report as .md file 
+	make it pretty ifos included, 
+		how many sequences
+		how many C/Gs
+		(sed -e replaces '/whatToReplace/withwhat/g(g- whole line)'
+		
+room two
+	create tool between organisms base on dinucleotides number (16 possible ones) 
+	foreach dinucl plot how many there are classification reference????
+	needs lagre evolutionary distance more accurate with oliginucleotides
+	possible 2 loops but here 
+	pipeline dwnld genome by changeable URL (PARAMS.URL) 
+	CALCULATE FREQUENCE OF DINUCLEOTIDES	
+	create config file wheere line by line all are listed GG AA ac ...
+	this file should be second input for pipeline an  then count how often the pattern 
+	(each line by it self Split?) ouccures
+	r scroipt that reads input and plots x-achse dinuc y frequence
+	the execute with two diff genomes and a short seq 
+	the make statement to wich genopme the short one belongs
+	
+	methodes 
+	channel.fromPath instead of download if file on SSD
+	channel.split text creates chunks of values in Chanell in steadf ofg files
+	channel.combine one channel for file one channel for dinucleotides create anrray 
+		channel with a line from dinuc file and the file so it searches for each file
+	channel.map defines operation that will be perforemd on each element but not in bash but with groovy
+	
