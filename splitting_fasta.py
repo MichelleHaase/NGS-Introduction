@@ -35,3 +35,6 @@ infile = sys.argv[1]
 prefix = sys.argv[2]
 
 split_fasta(infile)
+
+
+## todo checkout argparse modul for Python 
