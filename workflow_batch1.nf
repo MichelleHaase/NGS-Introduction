@@ -33,7 +33,20 @@ process splitSeq
 		split $infile --lines=2 --additional-suffix=.fasta split_
 	"""
 }
+
+process countRepeats 
+{
+  publishDir params.out, mode: "copy", overwrite: true
+  input:
+    path infile 
+  output:
+    path "${infile.getSimpleName()}.repeatcount"
+  """
+  grep -o "GCCGCG" $infile | wc -l > ${infile.getSimpleName()}.repeatcount
+  """
+}
+
 workflow
 {
-	downloadFile | splitSeq
+	downloadFile | splitSeq | flatten | countRepeats
 }
