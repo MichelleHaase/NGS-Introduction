@@ -48,6 +48,7 @@ workflow
 		System.exit(0)
 	}
 channel_split= samfile.splitText()
-channel_split.view()
+channel_filtered= channel_split.filter { it[0] != "@" }.map { it.tokenize("\t")
+channel_mapped= channel.filtered.map()
 
 } 
