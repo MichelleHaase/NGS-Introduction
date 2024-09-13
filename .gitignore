@@ -1,2 +1,9 @@
 **/.next*
 **/work/
+**/*:Zone*
+**/cache*
+**/output/
+**/batch1.fasta
+**/*:shield
+**/singularity_containers*
+**/*.img
